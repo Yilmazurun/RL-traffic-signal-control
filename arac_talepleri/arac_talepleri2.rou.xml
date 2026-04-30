@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    
+    <!-- Sürücü Karakteristikleri -->
+    <!-- sigma: Sürücü hatası (0-1 arası). 0.5 gerçekçi bir kararsızlıktır. -->
+    <!-- speedDev: Hız sapması. 0.1, araçların hızının %10 değişken olmasını sağlar. -->
+    <vType id="standart_oto" sigma="0.5" speedDev="0.1" accel="2.6" decel="4.5" length="5.0"/>
+
+    <!-- Araç Akışı -->
+    <!--normalde probability yazan yerde perHour değeri vardı fakat bu her 3.6 saniyede bir araç monoton çıkartır
+    biz de bi olasılığa bağladık-->
+    <flow id="engiz_batipark" type="standart_oto" begin="0.00" end="3600.00" probability="0.27" from="-4742#1" to="-4840"/>
+</routes>
