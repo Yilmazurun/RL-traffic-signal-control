@@ -7,11 +7,11 @@
 
     <input>
         <net-file value="normal_sure.net.xml"/>
-        <route-files value="arac_talepleri/arac_talepleri2.rou.xml"/>
+        <route-files value="arac_talepleri/arac_talepleri3.rou.xml"/>
     </input>
     <output>
         <!-- Simülasyon bitince bu dosyayı oluşturacak -->
-        <tripinfo-output value="normal_sonuclari6.xml"/>
+        <tripinfo-output value="normal_sonuclari10.xml"/>
     </output>
     <time>
         <begin value="0"/>

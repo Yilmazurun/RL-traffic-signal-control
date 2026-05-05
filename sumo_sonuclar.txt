@@ -1,0 +1,136 @@
+//tüm yolların hızı 82km/h'ye ayarlandı ve tekrar test edildi.
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 2000
+Ortalama Sefer Süresi: 1523.10 saniye
+Ortalama Bekleme Süresi: 90.13 saniye
+
+-------------------------------------------------------------------------
+yeşil dalga sonuçları
+
+//engiz-batipark rotası, yeşil dalga sistemi, tek yön sadece, saatte 1000 araç
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1000
+Ortalama Sefer Süresi: 1452.72 saniye
+Ortalama Bekleme Süresi: 65.83 saniye
+
+//üsttekinin aynısı, ama olasılıksal olarak saatte 1000 araç gibi yaptık
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 983
+Ortalama Sefer Süresi: 1447.70 saniye
+Ortalama Bekleme Süresi: 65.18 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 992
+Ortalama Sefer Süresi: 1452.68 saniye
+Ortalama Bekleme Süresi: 65.31 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 920
+Ortalama Sefer Süresi: 1459.24 saniye
+Ortalama Bekleme Süresi: 65.61 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 967
+Ortalama Sefer Süresi: 1465.46 saniye
+Ortalama Bekleme Süresi: 68.46 saniye
+------------------------------------
+//300 araç 
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 297
+Ortalama Sefer Süresi: 1379.42 saniye
+Ortalama Bekleme Süresi: 46.07 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 313
+Ortalama Sefer Süresi: 1385.40 saniye
+Ortalama Bekleme Süresi: 46.22 saniye
+--------------------------------------------
+//500 araç
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 479
+Ortalama Sefer Süresi: 1395.95 saniye
+Ortalama Bekleme Süresi: 50.00 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 496
+Ortalama Sefer Süresi: 1396.37 saniye
+Ortalama Bekleme Süresi: 50.65 saniye
+
+//1200 araç
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1203
+Ortalama Sefer Süresi: 1524.69 saniye
+Ortalama Bekleme Süresi: 87.29 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1169
+Ortalama Sefer Süresi: 1504.85 saniye
+Ortalama Bekleme Süresi: 78.72 saniye
+
+
+-----------------------------------------------------------------
+normal süreli kavşak sonuçları
+
+
+//engiz-batipark rotası, ana yol 60 tali yollar 25 saniye yeşil, 3'er saniye sarı ve 2'şer saniye herkese kırmızı, 1000 araç 
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1000
+Ortalama Sefer Süresi: 1519.46 saniye
+Ortalama Bekleme Süresi: 90.72 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 983
+Ortalama Sefer Süresi: 1517.91 saniye
+Ortalama Bekleme Süresi: 89.74 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 966
+Ortalama Sefer Süresi: 1521.70 saniye
+Ortalama Bekleme Süresi: 90.31 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 957
+Ortalama Sefer Süresi: 1531.06 saniye
+Ortalama Bekleme Süresi: 90.52 saniye
+
+//1200 araç
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1216
+Ortalama Sefer Süresi: 1572.39 saniye
+Ortalama Bekleme Süresi: 106.19 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 1235
+Ortalama Sefer Süresi: 1590.01 saniye
+Ortalama Bekleme Süresi: 112.10 saniye
+
+//500 araç 
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 493
+Ortalama Sefer Süresi: 1454.01 saniye
+Ortalama Bekleme Süresi: 74.97 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 504
+Ortalama Sefer Süresi: 1462.36 saniye
+Ortalama Bekleme Süresi: 77.69 saniye
+
+//300 araç
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 301
+Ortalama Sefer Süresi: 1438.87 saniye
+Ortalama Bekleme Süresi: 72.03 saniye
+
+--- SİMÜLASYON SONUÇLARI ---
+Hedefe Ulaşan Toplam Araç: 300
+Ortalama Sefer Süresi: 1430.57 saniye
+Ortalama Bekleme Süresi: 72.26 saniye
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,7 @@ def simulasyonu_calistir():
     
     
     # Araç gidişini izlemek için "sumo" yerine "sumo-gui" yaz
-    sumoCmd = ["sumo", "-c", "yesil_dalga.sumocfg", "--random"] 
+    sumoCmd = ["sumo", "-c", "normal_sure.sumocfg", "--random"] 
     
     traci.start(sumoCmd)
     
@@ -29,7 +29,7 @@ def simulasyonu_calistir():
 def verileri_analiz_et():
     # SUMO'nun oluşturduğu dosyayı oku
     try:
-        tree = ET.parse("yesil_dalga_sonuclari6.xml")
+        tree = ET.parse("normal_sonuclari10.xml")
         root = tree.getroot()
     except FileNotFoundError:
         print("Hata: sefer_sonuclari.xml dosyası bulunamadı. Simülasyon düzgün çalışmadı.")
