@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-05-12T19:49:14.385531+03:00 by Eclipse SUMO netedit 1.26.0
+<!-- generated on 2026-05-14T18:45:40.394651+03:00 by Eclipse SUMO netedit 1.26.0
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
@@ -8,25 +8,23 @@
     <flow id="b_e_0" begin="0.00" end="3600.00" perHour="1800.00" from="-4841" to="-4839"/>
     <flow id="b_e_1_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,3" from="-4785" to="-4787"/>
     <flow id="b_e_4_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,57,0" from="-4833.3" to="-4833.718"/>
-    <flow id="b_t_1" begin="0.00" end="12000.00" probability="0.1000000000000000111" color="255,0,196" from="-4833.3" to="E29"/>
+    <flow id="b_t_1" begin="0.00" end="12000.00" probability="0.1" color="255,0,196" from="-4833.3" to="E29"/>
     <flow id="b_y_1_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,137" from="-4785" to="E66"/>
     <flow id="e_b_1_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,233" from="-4786" to="-4784"/>
-    <flow id="e_b_4_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,196" from="-4834.602" to="-4832"/>
-    <flow id="t_b_1" begin="0.00" end="12000" probability="0.1" from="E28" to="-4832"/>
-    <flow id="t_e_1" begin="0.00" end="12000.00" probability="0.1000000000000000111" color="255,0,196" from="E28" to="-4833.718"/>
+    <flow id="e_b_4_low" begin="0.00" end="3000.00" probability="0.2" from="-4834.602.175" to="-4832"/>
+    <flow id="t_b_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" from="E28" to="-4832"/>
+    <flow id="t_e_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="255,0,196" from="E28" to="-4833.718"/>
     <flow id="y_e_1_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="179,0,255" from="E67" to="-4787"/>
     <flow id="b_e_1_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,3" from="-4785" to="-4787"/>
     <flow id="b_e_4_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,57,0" from="-4833.3" to="-4833.718"/>
+    <flow id="e_b_4_peak" begin="3000.00" end="7000.00" probability="0.6" from="-4834.602.175" to="-4832"/>
     <flow id="b_y_1_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,137" from="-4785" to="E66"/>
     <flow id="e_b_1_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,233" from="-4786" to="-4784"/>
-    <flow id="e_b_4_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,196" from="-4834.602" to="-4832"/>
-    
     <flow id="y_e_1_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="179,0,255" from="E67" to="-4787"/>
     <flow id="b_e_1_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,3" from="-4785" to="-4787"/>
     <flow id="b_e_4_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,57,0" from="-4833.3" to="-4833.718"/>
     <flow id="b_y_1_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,137" from="-4785" to="E66"/>
+    <flow id="e_b_4_normal" begin="7000.00" end="12000.00" probability="0.3" from="-4834.602.175" to="-4832"/>
     <flow id="e_b_1_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,233" from="-4786" to="-4784"/>
-    <flow id="e_b_4_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,196" from="-4834.602" to="-4832"/>
-    
     <flow id="y_e_1_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="179,0,255" from="E67" to="-4787"/>
 </routes>

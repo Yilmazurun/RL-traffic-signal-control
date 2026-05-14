@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-05-13T23:19:28.896812+03:00 by Eclipse SUMO sumo 1.26.0
+<!-- generated on 2026-05-14T22:37:23.355349+03:00 by Eclipse SUMO sumo 1.26.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="yeni_normal_sure.net.xml"/>
-        <route-files value="arac_talepleri/deneme_1.rou.xml"/>
-        <additional-files value="Detectors/detector_deneme.add.xml"/>
+        <net-file value="d:\Sumo_Samsun\yeni_normal_sure.net.xml"/>
+        <route-files value="d:\Sumo_Samsun\arac_talepleri/deneme_1.rou.xml"/>
+        <additional-files value="d:\Sumo_Samsun\Detectors/detector_deneme.add.xml"/>
     </input>
 
     <time>
@@ -18,11 +18,11 @@
     </processing>
 
     <traci_server>
-        <remote-port value="58276"/>
+        <remote-port value="61549"/>
     </traci_server>
 
     <random_number>
-        <seed value="1"/>
+        <seed value="42"/>
     </random_number>
 
 </sumoConfiguration>

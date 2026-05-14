@@ -1,2 +1,0 @@
-episode,total_steps,measure_interval,average_main_queue,average_turn_queue,average_side_queue,average_queue,max_queue,min_queue,measurement_count
-1,12000,10,54.8625,36.02333333333333,19.981666666666666,110.8675,166,1,1200
