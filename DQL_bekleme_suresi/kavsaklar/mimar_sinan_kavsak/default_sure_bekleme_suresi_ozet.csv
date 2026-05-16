@@ -1,0 +1,4 @@
+episode,total_steps,measure_interval,average_total_waiting_time,average_waiting_time_per_vehicle,max_total_waiting_time,max_vehicle_waiting_time,cumulative_total_waiting_time,measurement_count
+1,12000,10,1708.4175,18.92762682023753,4821.0,229.0,2050101.0,1200
+2,12000,10,1848.1116666666667,19.895597983419467,5649.0,245.0,2217734.0,1200
+3,12000,10,1848.1358333333333,20.432092311796563,5523.0,211.0,2217763.0,1200

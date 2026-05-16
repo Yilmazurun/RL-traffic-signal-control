@@ -7,6 +7,8 @@ import csv
 import os
 import sys
 
+from kavsak_configleri import get_config, get_config_names
+
 # ============================================
 # SUMO PATH
 # ============================================
@@ -20,33 +22,15 @@ else:
 import traci
 
 # ============================================
-# SUMO CONFIG
-# ============================================
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = (
-    SCRIPT_DIR
-    if os.path.exists(os.path.join(SCRIPT_DIR, "yeni_normal_sure.sumocfg"))
-    else os.path.dirname(SCRIPT_DIR)
-)
-OUTPUT_DIR = SCRIPT_DIR
-
-USE_GUI = False
-SUMO_BINARY = "sumo-gui" if USE_GUI else "sumo"
-SUMO_CONFIG_FILE = os.path.join(PROJECT_ROOT, "yeni_normal_sure.sumocfg")
-
-# ============================================
 # GENERAL SETTINGS
 # ============================================
 
-TLS_ID = "turkis_kavsak"
+USE_GUI = False
+SUMO_BINARY = "sumo-gui" if USE_GUI else "sumo"
 
-NUM_EPISODES = 3
+NUM_EPISODES = 1
 TOTAL_STEPS = 12000
 MEASURE_INTERVAL = 10
-
-DETAIL_CSV_FILE = os.path.join(OUTPUT_DIR, "default_sure_bekleme_suresi_detay.csv")
-SUMMARY_CSV_FILE = os.path.join(OUTPUT_DIR, "default_sure_bekleme_suresi_ozet.csv")
 
 DETAIL_FIELDS = [
     "episode",
@@ -71,14 +55,32 @@ SUMMARY_FIELDS = [
     "measurement_count",
 ]
 
-PHASE_NAMES = {
-    0: "MAIN_GREEN",
-    1: "MAIN_YELLOW",
-    2: "TURN_GREEN",
-    3: "TURN_YELLOW",
-    4: "SIDE_GREEN",
-    5: "SIDE_YELLOW",
-}
+
+# ============================================
+# CONFIG HELPERS
+# ============================================
+
+
+def get_output_paths(config):
+    output_dir = config["output_dir"]
+
+    return {
+        "detail": os.path.join(output_dir, "default_sure_bekleme_suresi_detay.csv"),
+        "summary": os.path.join(output_dir, "default_sure_bekleme_suresi_ozet.csv"),
+    }
+
+
+def get_phase_names(config):
+    phase_names = {}
+
+    for action in config["actions"]:
+        phase_names[action["green_phase"]] = action["name"]
+
+        if action.get("yellow_phase") is not None:
+            phase_names[action["yellow_phase"]] = action["name"].replace("GREEN", "YELLOW")
+
+    return phase_names
+
 
 # ============================================
 # SUMO HELPER FUNCTIONS
@@ -86,13 +88,34 @@ PHASE_NAMES = {
 
 
 # Trafik isiginin mevcut phase indexini dondurur.
-def get_current_phase():
-    return traci.trafficlight.getPhase(TLS_ID)
+def get_current_phase(config):
+    return traci.trafficlight.getPhase(config["tls_id"])
 
 
-# Aktif araclarin bekleme surelerini okur.
-def get_waiting_time_snapshot():
-    vehicle_ids = traci.vehicle.getIDList()
+# Config'teki tum detector id'lerini tek listede toplar.
+def get_all_detector_ids(config):
+    detector_ids = []
+
+    for group in config["detector_groups"]:
+        detector_ids.extend(group["detectors"])
+
+    return detector_ids
+
+
+# Bu kavsagin detector alanlari icindeki arac id'lerini dondurur.
+def get_local_vehicle_ids(config):
+    vehicle_ids = set()
+
+    for detector_id in get_all_detector_ids(config):
+        for vehicle_id in traci.lanearea.getLastStepVehicleIDs(detector_id):
+            vehicle_ids.add(vehicle_id)
+
+    return vehicle_ids
+
+
+# Secilen kavsagin detector alanlarindaki araclarin bekleme surelerini okur.
+def get_waiting_time_snapshot(config):
+    vehicle_ids = get_local_vehicle_ids(config)
     active_vehicle_count = len(vehicle_ids)
     total_waiting_time = 0.0
     max_vehicle_waiting_time = 0.0
@@ -114,11 +137,11 @@ def get_waiting_time_snapshot():
 
 # SUMO'yu bir episode icin baslatir.
 # Burada trafik isigina hic mudahale edilmez; net dosyasindaki default sureler calisir.
-def start_sumo_for_episode(episode_number):
+def start_sumo_for_episode(config, episode_number):
     sumo_config = [
         SUMO_BINARY,
         "-c",
-        SUMO_CONFIG_FILE,
+        config["sumo_config_file"],
         "--step-length",
         "1",
         "--lateral-resolution",
@@ -144,21 +167,18 @@ def start_sumo_for_episode(episode_number):
 # ============================================
 
 
-# CSV dosyasini basliklariyla sifirdan olusturur.
 def create_csv(file_path, fieldnames):
     with open(file_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
 
 
-# Tek bir satiri ilgili CSV dosyasina ekler.
 def append_csv(file_path, fieldnames, row):
     with open(file_path, "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writerow(row)
 
 
-# Birden fazla satiri ilgili CSV dosyasina tek seferde ekler.
 def append_csv_rows(file_path, fieldnames, rows):
     if not rows:
         return
@@ -174,17 +194,25 @@ def append_csv_rows(file_path, fieldnames, rows):
 
 
 # Default surelerle calisan agi izler ve bekleme suresi metriklerini CSV'ye yazar.
-def measure_default_waiting_times(num_episodes, total_steps, measure_interval):
-    create_csv(DETAIL_CSV_FILE, DETAIL_FIELDS)
-    create_csv(SUMMARY_CSV_FILE, SUMMARY_FIELDS)
+def measure_default_waiting_times(config, num_episodes, total_steps, measure_interval):
+    os.makedirs(config["output_dir"], exist_ok=True)
+
+    paths = get_output_paths(config)
+    phase_names = get_phase_names(config)
+
+    create_csv(paths["detail"], DETAIL_FIELDS)
+    create_csv(paths["summary"], SUMMARY_FIELDS)
 
     print("\n=== DEFAULT SURE BEKLEME SURESI OLCUMU BASLADI ===")
     print("Trafik isigina mudahale edilmiyor; agdaki sureler aynen kullaniliyor.")
+    print(f"Config: {config['name']} ({config['title']})")
+    print(f"TLS: {config['tls_id']}")
+    print(f"Output dir: {config['output_dir']}")
 
     for episode in range(1, num_episodes + 1):
         print(f"\n========== EPISODE {episode}/{num_episodes} ==========")
 
-        start_sumo_for_episode(episode - 1)
+        start_sumo_for_episode(config, episode - 1)
 
         total_waiting_time_sum = 0.0
         average_vehicle_waiting_time_sum = 0.0
@@ -206,16 +234,16 @@ def measure_default_waiting_times(num_episodes, total_steps, measure_interval):
                     total_waiting_time,
                     average_waiting_time_per_vehicle,
                     max_vehicle_waiting_time,
-                ) = get_waiting_time_snapshot()
+                ) = get_waiting_time_snapshot(config)
 
-                phase = get_current_phase()
+                phase = get_current_phase(config)
 
                 detail_rows.append(
                     {
                         "episode": episode,
                         "time": current_time,
                         "phase": phase,
-                        "phase_name": PHASE_NAMES.get(phase, "UNKNOWN"),
+                        "phase_name": phase_names.get(phase, "UNKNOWN"),
                         "active_vehicle_count": active_vehicle_count,
                         "total_waiting_time": total_waiting_time,
                         "average_waiting_time_per_vehicle": average_waiting_time_per_vehicle,
@@ -236,7 +264,7 @@ def measure_default_waiting_times(num_episodes, total_steps, measure_interval):
                     print(
                         f"Episode: {episode}, "
                         f"Time: {current_time}, "
-                        f"Phase: {PHASE_NAMES.get(phase, 'UNKNOWN')}, "
+                        f"Phase: {phase_names.get(phase, 'UNKNOWN')}, "
                         f"Total Waiting Time: {total_waiting_time:.2f}, "
                         f"Avg Vehicle Waiting: {average_waiting_time_per_vehicle:.2f}"
                     )
@@ -250,10 +278,10 @@ def measure_default_waiting_times(num_episodes, total_steps, measure_interval):
             1,
         )
 
-        append_csv_rows(DETAIL_CSV_FILE, DETAIL_FIELDS, detail_rows)
+        append_csv_rows(paths["detail"], DETAIL_FIELDS, detail_rows)
 
         append_csv(
-            SUMMARY_CSV_FILE,
+            paths["summary"],
             SUMMARY_FIELDS,
             {
                 "episode": episode,
@@ -275,31 +303,51 @@ def measure_default_waiting_times(num_episodes, total_steps, measure_interval):
             f"Max Total Waiting Time: {max_total_waiting_time:.2f}"
         )
 
-    print(f"\nDetay CSV kaydedildi: {DETAIL_CSV_FILE}")
-    print(f"Ozet CSV kaydedildi: {SUMMARY_CSV_FILE}")
+    print(f"\nDetay CSV kaydedildi: {paths['detail']}")
+    print(f"Ozet CSV kaydedildi: {paths['summary']}")
 
 
-# Komut satiri parametrelerini okur.
+# ============================================
+# CLI
+# ============================================
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Yeni normal sure agi icin default bekleme suresi olcumu"
+        description="Config tabanli default bekleme suresi olcumu"
     )
+    parser.add_argument("--config", default="turkis_kavsak", choices=get_config_names())
     parser.add_argument("--episodes", type=int, default=NUM_EPISODES)
     parser.add_argument("--steps", type=int, default=TOTAL_STEPS)
     parser.add_argument("--interval", type=int, default=MEASURE_INTERVAL)
     parser.add_argument("--gui", action="store_true")
+    parser.add_argument("--list-configs", action="store_true")
     return parser.parse_args()
 
 
-if __name__ == "__main__":
+def main():
+    global USE_GUI
+    global SUMO_BINARY
+
     args = parse_args()
+
+    if args.list_configs:
+        print("\n".join(get_config_names()))
+        return
 
     if args.gui:
         USE_GUI = True
         SUMO_BINARY = "sumo-gui"
 
+    config = get_config(args.config)
+
     measure_default_waiting_times(
+        config=config,
         num_episodes=args.episodes,
         total_steps=args.steps,
         measure_interval=args.interval,
     )
+
+
+if __name__ == "__main__":
+    main()
