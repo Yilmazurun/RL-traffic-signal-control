@@ -1,0 +1,11 @@
+tls_id,distance_m,speed_kmh,cycle_s,arrival_mod_s,offset_s
+atakum_lisesi_kavsak,1166.61,80.00,120.00,0.00,0.00
+yesilyurt_avm_kavsak,2052.51,80.00,120.00,39.87,80.13
+mimar_sinan_kavsak,2454.75,80.00,120.00,57.97,62.03
+turkis_kavsak,3208.90,80.00,120.00,91.90,28.10
+omurevleri_kavsak,4189.25,80.00,120.00,16.02,103.98
+atakent_kavsak,5676.82,80.00,120.00,82.96,37.04
+yenimahalle_kavsak,6797.88,80.00,120.00,13.41,106.59
+pelitkoy_kavsak,7767.89,80.00,120.00,57.06,62.94
+korfez_kavsak,8374.28,80.00,120.00,84.35,35.65
+turgut_ozal_kavsak,9902.74,80.00,120.00,33.13,86.87
