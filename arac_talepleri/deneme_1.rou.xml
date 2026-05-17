@@ -8,16 +8,16 @@
     <flow id="atakent_b_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="0,103,255" from="-E68" to="E23"/>
     <flow id="atakent_e_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="174,0,255" from="-E68" to="-4785"/>
     <flow id="b_atakent_!" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="0,255,213" from="-4781" to="E68"/>
-    <flow id="b_e_1" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="0,255,213" from="-4841" to="-4839"/>
-    <flow id="b_e_10" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="0,255,147" from="-4779.656" to="-4779.656.62"/>
-    <flow id="b_e_2" begin="0.00" number="12000" probability="0.4000000000000000222" color="255,221,0" from="-4839.140" to="-4831"/>
-    <flow id="b_e_3" begin="0.00" end="12000.00" probability="0.2999999999999999889" color="0,1,255" from="-4831.55" to="-4831.419"/>
+    <flow id="b_e_1_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="0,255,213" from="-4841" to="-4839"/>
+    <flow id="b_e_2_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,221,0" from="-4839.140" to="-4831"/>
+    <flow id="b_e_3_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="0,1,255" from="-4831.55" to="-4831.419"/>
     <flow id="b_e_4_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,57,0" from="-4833.3" to="-4833.718"/>
-    <flow id="b_e_5" begin="0.00" end="12000.00" probability="0.4000000000000000222" from="-4833.718.442" to="-4833.1503"/>
-    <flow id="b_e_6" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="255,9,0" from="-4781" to="-4785"/>
+    <flow id="b_e_5_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" from="-4833.718.442" to="-4833.1503"/>
+    <flow id="b_e_6_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,9,0" from="-4781" to="-4785"/>
     <flow id="b_e_7_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,71" from="-4785.578" to="-4787"/>
-    <flow id="b_e_8" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="0,193,255" from="-4787.329" to="-4778"/>
-    <flow id="b_e_9" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="255,0,118" from="-4778.109" to="-4778.630"/>
+    <flow id="b_e_8_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="0,193,255" from="-4787.329" to="-4778"/>
+    <flow id="b_e_9_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="255,0,118" from="-4778.109" to="-4778.630"/>
+    <flow id="b_e_10_low" begin="0.00" end="3000.00" probability="0.2000000000000000111" color="0,255,147" from="-4779.656" to="-4779.656.62"/>
     <flow id="b_korfez_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="0,45,255" from="-4778.109" to="E22"/>
     <flow id="b_lise_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="255,0,188" from="-4841" to="E71"/>
     <flow id="b_mimar_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="0,255,247" from="-4831.55" to="E26"/>
@@ -61,14 +61,30 @@
     <flow id="y_e_1_low" begin="0.00" end="3000.00" probability="0.05000000000000000278" color="179,0,255" from="E67" to="-4787"/>
     <flow id="yesilyurt_b_1" begin="0.00" number="12000" probability="0.05000000000000000278" color="255,221,0" from="E70" to="-4838"/>
     <flow id="yesilyurt_e_1" begin="0.00" number="12000" probability="0.05000000000000000278" color="255,221,0" from="E70" to="-4831"/>
+    <flow id="b_e_1_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="0,255,213" from="-4841" to="-4839"/>
+    <flow id="b_e_2_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,221,0" from="-4839.140" to="-4831"/>
+    <flow id="b_e_3_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="0,1,255" from="-4831.55" to="-4831.419"/>
     <flow id="b_e_4_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,57,0" from="-4833.3" to="-4833.718"/>
+    <flow id="b_e_5_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" from="-4833.718.442" to="-4833.1503"/>
+    <flow id="b_e_6_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,9,0" from="-4781" to="-4785"/>
     <flow id="b_e_7_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,62" from="-4785.578" to="-4787"/>
+    <flow id="b_e_8_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="0,193,255" from="-4787.329" to="-4778"/>
+    <flow id="b_e_9_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="255,0,118" from="-4778.109" to="-4778.630"/>
+    <flow id="b_e_10_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" color="0,255,147" from="-4779.656" to="-4779.656.62"/>
     <flow id="b_y_1_peak" begin="3000.00" end="7000.00" probability="0.2000000000000000111" from="-4785.578" to="E66"/>
     <flow id="e_b_4_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" from="-4834.602.175" to="-4832"/>
     <flow id="e_b_7_peak" begin="3000.00" end="7000.00" probability="0.5999999999999999778" from="-4786.291" to="-4784"/>
     <flow id="y_e_1_peak" begin="3000.00" end="7000.00" probability="0.10000000000000000555" color="179,0,255" from="E67" to="-4787"/>
+    <flow id="b_e_1_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="0,255,213" from="-4841" to="-4839"/>
+    <flow id="b_e_2_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,221,0" from="-4839.140" to="-4831"/>
+    <flow id="b_e_3_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="0,1,255" from="-4831.55" to="-4831.419"/>
     <flow id="b_e_4_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,57,0" from="-4833.3" to="-4833.718"/>
+    <flow id="b_e_5_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" from="-4833.718.442" to="-4833.1503"/>
+    <flow id="b_e_6_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,9,0" from="-4781" to="-4785"/>
     <flow id="b_e_7_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,9" from="-4785.578" to="-4787"/>
+    <flow id="b_e_8_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="0,193,255" from="-4787.329" to="-4778"/>
+    <flow id="b_e_9_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="255,0,118" from="-4778.109" to="-4778.630"/>
+    <flow id="b_e_10_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" color="0,255,147" from="-4779.656" to="-4779.656.62"/>
     <flow id="b_y_1_normal" begin="7000.00" end="12000.00" probability="0.10000000000000000555" from="-4785.578" to="E66"/>
     <flow id="e_b_4_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" from="-4834.602.175" to="-4832"/>
     <flow id="e_b_7_normal" begin="7000.00" end="12000.00" probability="0.2999999999999999889" from="-4786.291" to="-4784"/>
