@@ -23,7 +23,7 @@
     <flow id="b_mimar_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="0,255,247" from="-4831.55" to="E26"/>
     <flow id="b_omurevleri_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="255,0,23" from="-4833.718.442" to="E31"/>
     <flow id="b_pelitkoy_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="0,255,70" from="-4787.329" to="E64"/>
-    <flow id="b_t_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="255,0,196" from="-4833.3" to="E29"/>
+    <flow id="b_t_1" begin="0.00" end="12000.00" probability="0.50000000000000000000" color="255,0,196" from="-4833.3" to="E29"/>
     <flow id="b_turgut_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" from="-4779.656" to="-E62"/>
     <flow id="b_y_1_low" begin="0.00" end="3000.00" probability="0.10000000000000000555" from="-4785.578" to="E66"/>
     <flow id="b_yesilyurt_1" begin="0.00" number="12000" probability="0.10000000000000000555" color="255,221,0" from="-4839.140" to="E69"/>
@@ -54,8 +54,8 @@
     <flow id="omurevleri_e_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="42,0,255" from="E30" to="-4833.1503"/>
     <flow id="pelitkoy_b_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="255,83,0" from="E65" to="-4786"/>
     <flow id="pelitkoy_e_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="191,255,0" from="E65" to="-4778"/>
-    <flow id="t_b_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" from="E28" to="-4832"/>
-    <flow id="t_e_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="255,0,196" from="E28" to="-4833.718"/>
+    <flow id="t_b_1" begin="0.00" end="12000.00" probability="0.50000000000000000000" from="E28" to="-4832"/>
+    <flow id="t_e_1" begin="0.00" end="12000.00" probability="0.50000000000000000000" color="255,0,196" from="E28" to="-4833.718"/>
     <flow id="turgut_b_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="255,162,0" from="E62" to="-4780.411"/>
     <flow id="turgut_e_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="128,128,0" from="E62" to="-4779.656.62"/>
     <flow id="y_e_1_low" begin="0.00" end="3000.00" probability="0.05000000000000000278" color="179,0,255" from="E67" to="-4787"/>

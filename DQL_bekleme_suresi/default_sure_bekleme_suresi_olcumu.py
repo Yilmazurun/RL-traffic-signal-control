@@ -28,7 +28,7 @@ import traci
 USE_GUI = False
 SUMO_BINARY = "sumo-gui" if USE_GUI else "sumo"
 
-NUM_EPISODES = 1
+NUM_EPISODES = 2
 TOTAL_STEPS = 12000
 MEASURE_INTERVAL = 10
 

@@ -2131,7 +2131,7 @@
         <phase duration="60" state="GrrGGGGGGGGrrrGGGGGGrrrrGGGG"/>
         <phase duration="5"  state="GrryyyyyyyyrrrGGGGGGrrrrGyyy"/>
         <phase duration="15" state="GrrGGGGGrrrGGGGGGGGGGGGGGrrr"/>
-        <phase duration="5"  state="GrrrrrrrrrrrrrGGGGGGrrrrGrrr"/>
+        <phase duration="5"  state="GrryyyyyrrryyyGGGGGGyyyyGrrr"/>
         <phase duration="25" state="GGGrrrrrrrrGGGGGGGGGGGGGGrrr"/>
         <phase duration="5"  state="GyyrrrrrrrryyyGGGGGGyyyyGrrr"/>
     </tlLogic>
