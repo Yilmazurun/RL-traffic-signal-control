@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-05-21T13:32:52.950178+03:00 by Eclipse SUMO netedit 1.26.0
+<!-- generated on 2026-06-09T23:32:09.710056+03:00 by Eclipse SUMO netedit 1.26.0
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
@@ -26,7 +26,7 @@
     <flow id="b_t_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" color="255,0,196" from="-4833.3" to="E29"/>
     <flow id="b_turgut_1" begin="0.00" end="12000.00" probability="0.10000000000000000555" from="-4779.656" to="-E62"/>
     <flow id="b_y_1_low" begin="0.00" end="3000.00" probability="0.10000000000000000555" from="-4785.578" to="E66"/>
-    <flow id="b_yesilyurt_1" begin="0.00" number="12000" probability="0.10000000000000000555" color="255,221,0" from="-4839.140" to="E69"/>
+    <flow id="b_yesilyurt_1" begin="0.00" number="12000" probability="0.10000000000000000555" color="0,255,67" from="-4839.140" to="E69"/>
     <flow id="e_atakent_1" begin="0.00" end="12000.00" probability="0.05000000000000000278" color="0,255,213" from="-4784.91" to="E68"/>
     <flow id="e_b_1" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="2,0,255" from="-4838.40" to="-4840"/>
     <flow id="e_b_10" begin="0.00" end="12000.00" probability="0.4000000000000000222" color="0,99,255" from="-4780" to="-4780.411"/>
