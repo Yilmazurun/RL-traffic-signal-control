@@ -1,0 +1,10 @@
+# Gelistirme ortami: Windows 10, Python 3.13, Eclipse SUMO 1.26.0
+numpy==2.3.5
+torch==2.11.0
+matplotlib==3.10.6
+
+# traci ve sumolib SUMO kurulumuyla gelir ($SUMO_HOME/tools); betikler oradan yukler.
+# SUMO_HOME tanimli degilse pip ile ayni surum kurulabilir:
+# eclipse-sumo==1.26.0
+# traci==1.26.0
+# sumolib==1.26.0

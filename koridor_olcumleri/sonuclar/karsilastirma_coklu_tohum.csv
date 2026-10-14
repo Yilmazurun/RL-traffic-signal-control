@@ -1,0 +1,6 @@
+mode,seed_count,seeds,average_travel_time_mean,average_travel_time_std,average_total_time_mean,average_total_time_std,average_insertion_delay_mean,average_insertion_delay_std,completed_vehicle_count_mean,completed_vehicle_count_std,teleport_count_mean,teleport_count_std,emergency_stop_count_mean,emergency_stop_count_std,red_light_emergency_stop_count_mean,red_light_emergency_stop_count_std,yellowless_red_switch_count_mean,yellowless_red_switch_count_std,override_count_mean,override_count_std
+default,5,1 2 3 4 5,1253.84,99.02,3452.71,145.37,2198.86,80.55,100.00,0.00,0.20,0.45,0.00,0.00,0.00,0.00,0.00,0.00,,
+green_wave,5,1 2 3 4 5,1239.73,107.20,3440.39,165.18,2200.66,80.61,100.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,,
+dql,5,1 2 3 4 5,1039.63,272.24,3237.65,265.15,2198.03,79.49,100.00,0.00,187.20,11.82,82.40,4.51,82.40,4.51,2685.60,32.94,,
+green_wave_fixed,5,1 2 3 4 5,1099.00,43.32,3297.15,98.06,2198.15,84.09,100.00,0.00,0.00,0.00,0.20,0.45,0.20,0.45,0.00,0.00,,
+dql_safe,5,1 2 3 4 5,677.29,14.81,2875.00,80.29,2197.71,83.24,100.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,885.20,16.48

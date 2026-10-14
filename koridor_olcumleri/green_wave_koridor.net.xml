@@ -2089,7 +2089,7 @@
         <phase duration="63.00" state="GrrGGGGGGGGrrrGGGGGGrrrrGGGG" />
         <phase duration="5.00" state="GrryyyyyyyyrrrGGGGGGrrrrGyyy" />
         <phase duration="15.75" state="GrrGGGGGrrrGGGGGGGGGGGGGGrrr" />
-        <phase duration="5.00" state="GrrrrrrrrrrrrrGGGGGGrrrrGrrr" />
+        <phase duration="5.00" state="GrryyyyyrrryyyGGGGGGyyyyGrrr" />
         <phase duration="26.25" state="GGGrrrrrrrrGGGGGGGGGGGGGGrrr" />
         <phase duration="5.00" state="GyyrrrrrrrryyyGGGGGGyyyyGrrr" />
     </tlLogic>

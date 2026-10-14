@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# SUMO detector ciktilari (her kosuda yeniden uretilir)
+detector_ciktilari/
+
+# Koridor olcumu teshis ciktilari (buyuk, her kosuda yeniden uretilir)
+koridor_olcumleri/sonuclar/tripinfo_*
+koridor_olcumleri/sonuclar/stats_*
+koridor_olcumleri/sonuclar/log_*
+koridor_olcumleri/sonuclar/konsol_*
+koridor_olcumleri/sonuclar/kosu_*.txt
+*.tmp

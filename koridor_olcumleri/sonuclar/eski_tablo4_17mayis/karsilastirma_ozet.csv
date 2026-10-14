@@ -1,0 +1,4 @@
+mode,test_vehicle_count,completed_vehicle_count,missing_vehicle_count,average_travel_time,median_travel_time,min_travel_time,max_travel_time,first_depart_time,last_arrival_time,output_file
+default,100,100,0,1335.95,1316.00,854.00,2811.00,90.00,19128.00,D:\Sumo_Samsun\koridor_olcumleri\sonuclar\default_travel_times.csv
+green_wave,100,100,0,1321.57,1291.50,849.00,2294.00,90.00,18625.00,D:\Sumo_Samsun\koridor_olcumleri\sonuclar\green_wave_travel_times.csv
+dql,100,94,6,1071.06,707.50,555.00,4156.00,90.00,19860.00,D:\Sumo_Samsun\koridor_olcumleri\sonuclar\dql_travel_times.csv
