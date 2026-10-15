@@ -1,0 +1,1 @@
+mode,seed,vehicle_id,status,planned_depart_time,depart_time,edge,lane,lane_tls,next_tls,next_tls_distance,next_tls_state,waiting_time,accumulated_waiting_time,speed,end_time

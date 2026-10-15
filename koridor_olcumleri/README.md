@@ -28,9 +28,12 @@ dosyasini ve detector tanimlarini degistirmez.
 | `dql` | Her kavsakta egitilmis DQL ajani. Faz degisiminde agdaki sari faz 3 s kullanilir. Rapordaki davranis, **degistirilmedi**. |
 | `green_wave_fixed` | `green_wave` ile ayni faz sureleri; ofset `arrival_mod % 120`. SUMO'da pozitif ofset programi geciktirir (faz 0, t = offset'te baslar), dolayisiyla dogru isaret budur. |
 | `dql_safe` | Ayni egitilmis modeller + guvenlik katmani (yeniden egitim yok), asagiya bakiniz. |
+| `max_pressure` | Ogrenmesiz Max-Pressure: her kararda yesil verdigi baglantilarin (giris seridi arac - cikis seridi arac) toplami en buyuk faz. Dogru sari gecis, asgari yesil 20 s, karar araligi 10 s. Basinc seridin tamamindaki arac sayisiyla hesaplanir. |
+| `max_pressure_safe` | `max_pressure` + `dql_safe` ile ayni azami kirmizi kalkani. |
+| `dql_koridor` | `DQL_koridor/` ile egitilen yeni ajanlar. `--koridor-run <kosu>` ile secilir, sonuclarda `dqlk_<kosu>` adiyla gorunur. `--mode hepsi` icine dahil degildir. |
 
 `--mode all` eskisi gibi yalnizca `default`, `green_wave`, `dql` calistirir.
-`--mode hepsi` bes modu calistirir. Birden fazla mod bosluklu verilebilir:
+`--mode hepsi` ogrenmesiz ve eski modellerle calisan tum modlari (yedi mod) calistirir. Birden fazla mod bosluklu verilebilir:
 `--mode dql dql_safe`.
 
 ### dql_safe guvenlik katmani

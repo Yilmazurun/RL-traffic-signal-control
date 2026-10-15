@@ -13,6 +13,8 @@ Bu dosya `koridor_seyahat_suresi_olcumu.py --summarize-only` ile yeniden uretili
 | DQL (rapordaki) | **1040 s (17.3 dk)** | 35.7 km/sa | -17.1% | 2198 s (36.6 dk) | 3238 s (54.0 dk) | -6.2% |
 | Yesil dalga (ofset duzeltilmis) | **1099 s (18.3 dk)** | 33.8 km/sa | -12.3% | 2198 s (36.6 dk) | 3297 s (55.0 dk) | -4.5% |
 | DQL + guvenlik katmani | **677 s (11.3 dk)** | 54.8 km/sa | -46.0% | 2198 s (36.6 dk) | 2875 s (47.9 dk) | -16.7% |
+| Max-Pressure (ogrenmesiz) | **5842 s (97.4 dk)** | 6.4 km/sa | +365.9% | 2209 s (36.8 dk) | 8051 s (134.2 dk) | +133.2% |
+| Max-Pressure + guvenlik katmani | **1967 s (32.8 dk)** | 18.9 km/sa | +56.8% | 2199 s (36.6 dk) | 4165 s (69.4 dk) | +20.6% |
 
 - **Koridorda gecen sure**: aracin aga girdigi andan koridor sonuna vardigi ana kadar (rapordaki Tablo 4 olcusu).
 - **Giris kuyrugunda bekleme**: planlanan kalkis ile aga gercekten girebildigi an arasi. Talepteki araclar girise tek seritten sokuldugu icin tum modlarda ayni; isik kontrolunden bagimsiz.
@@ -27,6 +29,8 @@ Bu dosya `koridor_seyahat_suresi_olcumu.py --summarize-only` ile yeniden uretili
 | DQL (rapordaki) | 500/500 | 1040 s (17.3 dk) | 693 s (11.6 dk) | 443 s (7.4 dk) | 5786 s (96.4 dk) |
 | Yesil dalga (ofset duzeltilmis) | 500/500 | 1099 s (18.3 dk) | 1070 s (17.8 dk) | 591 s (9.8 dk) | 1842 s (30.7 dk) |
 | DQL + guvenlik katmani | 500/500 | 677 s (11.3 dk) | 671 s (11.2 dk) | 491 s (8.2 dk) | 933 s (15.6 dk) |
+| Max-Pressure (ogrenmesiz) | 500/500 | 5842 s (97.4 dk) | 5508 s (91.8 dk) | 529 s (8.8 dk) | 12018 s (200.3 dk) |
+| Max-Pressure + guvenlik katmani | 500/500 | 1967 s (32.8 dk) | 1738 s (29.0 dk) | 519 s (8.7 dk) | 9173 s (152.9 dk) |
 
 ## 3. Tohum bazinda ortalama koridor suresi (s)
 
@@ -39,6 +43,8 @@ Tohum, SUMO'daki rastgele arka plan trafigini degistirir; test araclari ayni kal
 | DQL (rapordaki) | 820 | 926 | 1037 | 1507 | 908 | 1040 | 272 |
 | Yesil dalga (ofset duzeltilmis) | 1031 | 1106 | 1135 | 1136 | 1087 | 1099 | 43 |
 | DQL + guvenlik katmani | 684 | 679 | 656 | 672 | 696 | 677 | 15 |
+| Max-Pressure (ogrenmesiz) | 5852 | 5799 | 5500 | 5880 | 6178 | 5842 | 242 |
+| Max-Pressure + guvenlik katmani | 1422 | 2141 | 3302 | 1306 | 1662 | 1967 | 812 |
 
 ## 4. Guvenlik (kosu basina ortalama, tum araclar)
 
@@ -49,6 +55,8 @@ Tohum, SUMO'daki rastgele arka plan trafigini degistirir; test araclari ayni kal
 | DQL (rapordaki) | 187 | 82 | 2686 | - |
 | Yesil dalga (ofset duzeltilmis) | 0 | 0 | 0 | - |
 | DQL + guvenlik katmani | 0 | 0 | 0 | 885 |
+| Max-Pressure (ogrenmesiz) | 1483 | 0 | 0 | - |
+| Max-Pressure + guvenlik katmani | 411 | 0 | 0 | 1683 |
 
 - **Isinlanma**: SUMO'nun cok uzun sure kilitli kalan araci ileri tasimasi (sikisma belirtisi).
 - **Acil durus**: aracin kirmiziya donen isikta fiziksel sinirin otesinde fren yapmasi.

@@ -17,6 +17,7 @@ karsilastirilir.
 | `Detectors/detector_deneme.add.xml` | Ajanlarin durum olarak okudugu E2 (lanearea) detector'leri |
 | `DQL_bekleme_suresi/` | Bekleme suresi odullu DQL egitimi. `kavsak_configleri.py` kavsak tanimlari, `train_*.py` egitim betikleri, `kavsaklar/<kavsak>/` egitilmis modeller (`dql_bekleme_suresi_model.pth`) ve egitim grafikleri |
 | `koridor_olcumleri/` | Koridor seyahat suresi olcumu (varsayilan, yesil dalga, DQL). Ayrinti: [koridor_olcumleri/README.md](koridor_olcumleri/README.md) |
+| `DQL_koridor/` | Yeni yontem: kalkanli, cok metrikli, koridor farkindalikli DQN (10 ajan birlikte, devam ettirilebilir egitim). Ayrinti: [DQL_koridor/README.md](DQL_koridor/README.md) |
 | `DQL_kuyruk_uzunlugu/`, `QL/`, `main.py`, `agent.py` | Onceki denemeler (kuyruk odullu DQL, tablo Q-ogrenme) |
 | `normal_sonuclar/`, `yesil_dalga_sonuclar/` | Eski olcum ciktilari |
 | `rapor_kaynaklari/` | Rapor belgeleri |

@@ -12,3 +12,9 @@ koridor_olcumleri/sonuclar/log_*
 koridor_olcumleri/sonuclar/konsol_*
 koridor_olcumleri/sonuclar/kosu_*.txt
 *.tmp
+
+# DQL_koridor egitim durumu (deneyim bellegi dahil, buyuk); modeller.pt git'e girer
+DQL_koridor/egitimler/*/checkpoint.pt
+DQL_koridor/egitimler/*/*.tmp
+DQL_koridor/egitim_*.txt
+DQL_koridor/egitimler/*/detector_egitim.add.xml

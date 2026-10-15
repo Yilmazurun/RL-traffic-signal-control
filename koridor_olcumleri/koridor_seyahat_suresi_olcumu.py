@@ -66,9 +66,12 @@ SAFE_YELLOW_STEPS = 5
 MAX_RED_STEPS = 90
 
 OLD_MODES = ["default", "green_wave", "dql"]
-NEW_MODES = ["green_wave_fixed", "dql_safe"]
+NEW_MODES = ["green_wave_fixed", "dql_safe", "max_pressure", "max_pressure_safe"]
 ALL_MODES = OLD_MODES + NEW_MODES
 DQL_MODES = ["dql", "dql_safe"]
+# DQL_koridor ile egitilen ajanlar: --mode dql_koridor --koridor-run <kosu>
+# sonuclarda "dqlk_<kosu>" adiyla yer alir.
+KORIDOR_MODE_PREFIX = "dqlk_"
 
 TRAVEL_TIME_FIELDS = [
     "mode",
@@ -740,6 +743,8 @@ MODE_LABELS = {
     "dql": "DQL (rapordaki)",
     "green_wave_fixed": "Yesil dalga (ofset duzeltilmis)",
     "dql_safe": "DQL + guvenlik katmani",
+    "max_pressure": "Max-Pressure (ogrenmesiz)",
+    "max_pressure_safe": "Max-Pressure + guvenlik katmani",
 }
 
 
@@ -1119,9 +1124,12 @@ class SafeDQNController(DQNController):
 
         controlled_links = traci.trafficlight.getControlledLinks(self.tls_id)
 
+        self.link_out_lanes = {}
+
         for link_index, links in enumerate(controlled_links):
             if links:
                 self.link_lanes[link_index] = links[0][0]
+                self.link_out_lanes[link_index] = links[0][1]
 
         for action_index, green_phase in self.action_to_green.items():
             state = logic.phases[green_phase].state
@@ -1262,6 +1270,50 @@ class SafeDQNController(DQNController):
         self.transition_count += 1
 
 
+# Ogrenmesiz Max-Pressure kontrolu (Varaiya 2013; RESCO karsilastirma yontemi).
+# Her karar aninda, yesil verdigi baglantilarin toplam basinci
+# (giris seridindeki arac - cikis seridindeki arac) en buyuk olan action secilir.
+# Faz gecisi, asgari yesil ve karar araligi dql_safe ile aynidir. max_pressure
+# modunda azami kirmizi kurali kapalidir (saf Max-Pressure); max_pressure_safe
+# modunda dql_safe ile ayni kalkan aciktir.
+class MaxPressureController(SafeDQNController):
+    def __init__(self, config, yellow_steps=SAFE_YELLOW_STEPS, max_red=float("inf")):
+        super().__init__(config, model=None, device=None, max_red=max_red, yellow_steps=yellow_steps)
+
+    def action_pressure(self, action):
+        pressure = 0
+
+        for link_index in self.action_links[action]:
+            pressure += traci.lane.getLastStepVehicleNumber(self.link_lanes[link_index])
+            pressure -= traci.lane.getLastStepVehicleNumber(self.link_out_lanes[link_index])
+
+        return pressure
+
+    def choose_action(self):
+        pressures = {action: self.action_pressure(action) for action in self.action_links}
+        best = max(pressures.values())
+
+        # Esitlikte mevcut fazda kal; gereksiz gecis yapma.
+        if pressures.get(self.current_action) == best:
+            return self.current_action
+
+        return min(action for action, pressure in pressures.items() if pressure == best)
+
+
+def load_max_pressure_controllers(yellow_steps=SAFE_YELLOW_STEPS, max_red=float("inf")):
+    ensure_dql_path()
+
+    from kavsak_configleri import get_config
+
+    controllers = [
+        MaxPressureController(get_config(name), yellow_steps=yellow_steps, max_red=max_red)
+        for name in DQL_CONFIG_NAMES
+    ]
+    shield_text = "kapali" if max_red == float("inf") else f"{max_red:.0f} s"
+    print(f"Max-Pressure controller sayisi: {len(controllers)} (azami kirmizi: {shield_text})")
+    return controllers
+
+
 def get_queue_sum(detectors):
     total = 0
 
@@ -1359,7 +1411,26 @@ def load_dql_controllers(allow_missing_models, safe=False, max_red=MAX_RED_STEPS
     return controllers
 
 
+def load_koridor_controllers(run_name):
+    koridor_dir = PROJECT_ROOT / "DQL_koridor"
+    if str(koridor_dir) not in sys.path:
+        sys.path.insert(0, str(koridor_dir))
+
+    import koridor_ajan
+
+    return koridor_ajan.load_trained_agents(run_name)
+
+
 def build_controllers(mode, args):
+    if mode.startswith(KORIDOR_MODE_PREFIX):
+        return load_koridor_controllers(mode[len(KORIDOR_MODE_PREFIX):])
+
+    if mode == "max_pressure":
+        return load_max_pressure_controllers(yellow_steps=args.safe_yellow)
+
+    if mode == "max_pressure_safe":
+        return load_max_pressure_controllers(yellow_steps=args.safe_yellow, max_red=args.max_red)
+
     if mode not in DQL_MODES:
         return []
 
@@ -1585,7 +1656,7 @@ def measure_mode(mode, sumo_config_file, max_steps, gui, seed, args):
         "never_departed_count": sum(1 for row in missing_rows if row["status"] in NOT_DEPARTED_STATUSES),
         "departed_not_arrived_count": sum(1 for row in missing_rows if row["status"] not in NOT_DEPARTED_STATUSES),
         "yellowless_red_switch_count": monitor.count,
-        "override_count": sum(controller.override_count for controller in controllers) if mode == "dql_safe" else "",
+        "override_count": sum(controller.override_count for controller in controllers) if mode in ("dql_safe", "max_pressure_safe") or mode.startswith(KORIDOR_MODE_PREFIX) else "",
         "wall_clock_s": round(wall_clock),
     }
 
@@ -1776,12 +1847,17 @@ def verify_offsets():
     return all_ok
 
 
+def mode_arguments(mode):
+    if mode.startswith(KORIDOR_MODE_PREFIX):
+        return ["--mode", "dql_koridor", "--koridor-run", mode[len(KORIDOR_MODE_PREFIX):]]
+    return ["--mode", mode]
+
+
 def child_command(mode, seed, args):
     command = [
         sys.executable,
         str(Path(__file__).resolve()),
-        "--mode",
-        mode,
+        *mode_arguments(mode),
         "--seed",
         str(seed),
         "--max-steps",
@@ -1850,7 +1926,7 @@ def parse_args():
     parser.add_argument(
         "--mode",
         nargs="+",
-        choices=ALL_MODES + ["all", "hepsi"],
+        choices=ALL_MODES + ["all", "hepsi", "dql_koridor"],
         default=["all"],
         help="all: eski uc mod (default, green_wave, dql); hepsi: yeni modlar dahil bes mod.",
     )
@@ -1869,10 +1945,16 @@ def parse_args():
     parser.add_argument("--skip-prepare", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--skip-aggregate", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--allow-missing-models", action="store_true")
+    parser.add_argument(
+        "--koridor-run",
+        nargs="+",
+        default=["ana"],
+        help="dql_koridor modunda olculecek egitim kosu(lar)i (DQL_koridor/egitimler/<kosu>).",
+    )
     return parser.parse_args()
 
 
-def resolve_modes(requested):
+def resolve_modes(requested, koridor_runs=("ana",)):
     modes = []
 
     for mode in requested:
@@ -1880,6 +1962,8 @@ def resolve_modes(requested):
             expanded = OLD_MODES
         elif mode == "hepsi":
             expanded = ALL_MODES
+        elif mode == "dql_koridor":
+            expanded = [f"{KORIDOR_MODE_PREFIX}{run}" for run in koridor_runs]
         else:
             expanded = [mode]
 
@@ -1907,7 +1991,7 @@ def main():
         verify_offsets()
         return
 
-    modes = resolve_modes(args.mode)
+    modes = resolve_modes(args.mode, args.koridor_run)
     seeds = args.seeds if args.seeds else [args.seed]
     configs = {
         "default": DEFAULT_SUMO_CONFIG,
@@ -1915,7 +1999,11 @@ def main():
         "dql": DQL_SUMO_CONFIG,
         "green_wave_fixed": GREEN_WAVE_FIXED_SUMO_CONFIG,
         "dql_safe": DQL_SUMO_CONFIG,
+        "max_pressure": DQL_SUMO_CONFIG,
+        "max_pressure_safe": DQL_SUMO_CONFIG,
     }
+    for mode in modes:
+        configs.setdefault(mode, DQL_SUMO_CONFIG)
 
     if args.show_corridor:
         mode = "default" if args.mode == ["all"] else modes[0]
