@@ -1,0 +1,16 @@
+{
+  "reward": "combo",
+  "w_wait": 1.0,
+  "w_pressure": 1.0,
+  "w_starve": 1.0,
+  "switch_penalty": 0.5,
+  "reward_scale": 0.1,
+  "reward_clip": 10.0,
+  "starve_threshold": 60.0,
+  "moving": true,
+  "red_age": true,
+  "neighbors": false,
+  "shield": true,
+  "max_red": 90.0,
+  "yellow": 5
+}

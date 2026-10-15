@@ -1,0 +1,4 @@
+episode,seed,epsilon,sim_end_time,wall_clock_s,arrived,mean_travel_time,teleports,emergency_stops,mean_reward,mean_wait_part,mean_pressure_part,mean_starve_part,overrides,mean_loss
+1,1001,1.000,19000,1700,103116,345.20,100,0,-0.6643,3.0266,2.1912,1.0911,0,
+2,1002,0.850,19000,1771,106628,287.45,87,1,-0.5501,2.3533,1.8685,0.9495,0,0.0391
+3,1003,0.722,19000,1357,106742,221.53,137,0,-0.3989,1.5964,1.4170,0.6422,0,0.0150
