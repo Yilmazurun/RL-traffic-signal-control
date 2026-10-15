@@ -38,6 +38,9 @@ GREEN_WAVE_FIXED_OFFSETS_FILE = SCRIPT_DIR / "green_wave_fixed_offsetleri.csv"
 OFFSET_CHECK_FILE = RESULT_DIR / "ofset_dogrulama.csv"
 SUMMARY_FILE = RESULT_DIR / "karsilastirma_ozet.csv"
 MULTI_SEED_FILE = RESULT_DIR / "karsilastirma_coklu_tohum.csv"
+READABLE_SUMMARY_FILE = RESULT_DIR / "OZET.md"
+OLD_TABLE4_DIR = RESULT_DIR / "eski_tablo4_17mayis"
+CORRIDOR_LENGTH_M = 10314.63
 
 START_EDGE = "-4841"
 END_EDGE = "-4779.656.62.62"
@@ -728,6 +731,207 @@ def update_summary():
 
     print(f"Ozet guncellendi: {SUMMARY_FILE}")
     write_multi_seed_summary(rows)
+    write_readable_summary(rows)
+
+
+MODE_LABELS = {
+    "default": "Varsayilan (sabit sureli)",
+    "green_wave": "Yesil dalga (rapordaki)",
+    "dql": "DQL (rapordaki)",
+    "green_wave_fixed": "Yesil dalga (ofset duzeltilmis)",
+    "dql_safe": "DQL + guvenlik katmani",
+}
+
+
+def read_vehicle_rows(mode, seeds):
+    rows = []
+
+    for seed in seeds:
+        file_path = get_output_path(mode, seed)
+        if file_path.exists():
+            with file_path.open("r", newline="", encoding="utf-8") as f:
+                rows.extend(csv.DictReader(f))
+
+    return rows
+
+
+def mean_of(rows, field):
+    values = [float(row[field]) for row in rows if row.get(field) not in (None, "")]
+    return statistics.mean(values) if values else None
+
+
+def time_text(seconds):
+    if seconds is None:
+        return "-"
+    return f"{seconds:.0f} s ({seconds / 60.0:.1f} dk)"
+
+
+def change_text(value, reference):
+    if value is None or not reference:
+        return "-"
+    return f"{(value - reference) / reference * 100:+.1f}%"
+
+
+def count_text(value):
+    return f"{value:.0f}" if value is not None else "-"
+
+
+def mode_stats(mode, mode_rows):
+    seeds = sorted(int(row["seed"]) for row in mode_rows)
+    vehicles = read_vehicle_rows(mode, seeds)
+    travel = [float(row["travel_time"]) for row in vehicles]
+
+    return {
+        "vehicles": len(vehicles),
+        "planned": len(seeds) * TEST_VEHICLE_COUNT,
+        "travel": statistics.mean(travel) if travel else None,
+        "median": statistics.median(travel) if travel else None,
+        "min": min(travel) if travel else None,
+        "max": max(travel) if travel else None,
+        "insertion": mean_of(vehicles, "insertion_delay"),
+        "total": mean_of(vehicles, "total_time"),
+        "teleport": mean_of(mode_rows, "teleport_count"),
+        "emergency": mean_of(mode_rows, "emergency_stop_count"),
+        "yellowless": mean_of(mode_rows, "yellowless_red_switch_count"),
+        "override": mean_of(mode_rows, "override_count"),
+        "per_seed": {
+            int(row["seed"]): float(row["average_travel_time"])
+            for row in mode_rows
+            if row.get("average_travel_time")
+        },
+    }
+
+
+# Insan okumasi icin tek sayfalik Markdown ozet: her mod icin tum tohumlar
+# ve tum test araclari uzerinden ortalamalar.
+def write_readable_summary(rows):
+    by_mode = {}
+    for row in rows:
+        by_mode.setdefault(row["mode"], []).append(row)
+
+    modes = sorted(by_mode, key=lambda name: mode_sort_key({"mode": name}))
+    stats = {mode: mode_stats(mode, by_mode[mode]) for mode in modes}
+    base = stats.get("default", {})
+
+    lines = [
+        "# Koridor Olcumu - Ozet",
+        "",
+        "Batipark -> Engiz koridoru (~10,3 km, 10 sinyalize kavsak), 100 test araci.",
+        "Her mod icin tum tohumlar ve tum test araclari uzerinden ortalama.",
+        "Bu dosya `koridor_seyahat_suresi_olcumu.py --summarize-only` ile yeniden uretilir.",
+        "",
+        "## 1. Bir arac koridoru ortalama ne kadar surede geciyor?",
+        "",
+        "| Mod | Koridorda gecen sure | Ort. hiz | Varsayilana gore | Giris kuyrugunda bekleme | Toplam (bekleme dahil) | Varsayilana gore |",
+        "|---|---|---|---|---|---|---|",
+    ]
+
+    for mode in modes:
+        item = stats[mode]
+        speed = f"{CORRIDOR_LENGTH_M / item['travel'] * 3.6:.1f} km/sa" if item["travel"] else "-"
+        lines.append(
+            f"| {MODE_LABELS.get(mode, mode)} | **{time_text(item['travel'])}** | {speed} "
+            f"| {change_text(item['travel'], base.get('travel'))} "
+            f"| {time_text(item['insertion'])} | {time_text(item['total'])} "
+            f"| {change_text(item['total'], base.get('total'))} |"
+        )
+
+    lines += [
+        "",
+        "- **Koridorda gecen sure**: aracin aga girdigi andan koridor sonuna vardigi ana kadar (rapordaki Tablo 4 olcusu).",
+        "- **Giris kuyrugunda bekleme**: planlanan kalkis ile aga gercekten girebildigi an arasi. "
+        "Talepteki araclar girise tek seritten sokuldugu icin tum modlarda ayni; isik kontrolunden bagimsiz.",
+        "- **Toplam**: planlanan kalkistan varisa = bekleme + koridorda gecen sure.",
+        "",
+        "## 2. Dagilim (koridorda gecen sure, tum tohumlar)",
+        "",
+        "| Mod | Varan arac | Ortalama | Medyan | En kisa | En uzun |",
+        "|---|---|---|---|---|---|",
+    ]
+
+    for mode in modes:
+        item = stats[mode]
+        lines.append(
+            f"| {MODE_LABELS.get(mode, mode)} | {item['vehicles']}/{item['planned']} "
+            f"| {time_text(item['travel'])} | {time_text(item['median'])} "
+            f"| {time_text(item['min'])} | {time_text(item['max'])} |"
+        )
+
+    all_seeds = sorted({seed for item in stats.values() for seed in item["per_seed"]})
+    lines += [
+        "",
+        "## 3. Tohum bazinda ortalama koridor suresi (s)",
+        "",
+        "Tohum, SUMO'daki rastgele arka plan trafigini degistirir; test araclari ayni kalir.",
+        "",
+        "| Mod | " + " | ".join(f"Tohum {seed}" for seed in all_seeds) + " | Ortalama | Std. sapma |",
+        "|---|" + "---|" * (len(all_seeds) + 2),
+    ]
+
+    for mode in modes:
+        per_seed = stats[mode]["per_seed"]
+        values = [per_seed[seed] for seed in all_seeds if seed in per_seed]
+        cells = [f"{per_seed[seed]:.0f}" if seed in per_seed else "-" for seed in all_seeds]
+        mean = f"{statistics.mean(values):.0f}" if values else "-"
+        std = f"{statistics.stdev(values):.0f}" if len(values) > 1 else "-"
+        lines.append(f"| {MODE_LABELS.get(mode, mode)} | " + " | ".join(cells) + f" | {mean} | {std} |")
+
+    lines += [
+        "",
+        "## 4. Guvenlik (kosu basina ortalama, tum araclar)",
+        "",
+        "| Mod | Isinlanma | Acil durus | Sarisiz yesil->kirmizi gecis | Model kararina mudahale |",
+        "|---|---|---|---|---|",
+    ]
+
+    for mode in modes:
+        item = stats[mode]
+        lines.append(
+            f"| {MODE_LABELS.get(mode, mode)} | {count_text(item['teleport'])} | {count_text(item['emergency'])} "
+            f"| {count_text(item['yellowless'])} | {count_text(item['override'])} |"
+        )
+
+    lines += [
+        "",
+        "- **Isinlanma**: SUMO'nun cok uzun sure kilitli kalan araci ileri tasimasi (sikisma belirtisi).",
+        "- **Acil durus**: aracin kirmiziya donen isikta fiziksel sinirin otesinde fren yapmasi.",
+        "- **Sarisiz gecis**: bir baglantinin sari yanmadan yesilden kirmiziya donmesi.",
+    ]
+
+    old_summary = OLD_TABLE4_DIR / "karsilastirma_ozet.csv"
+    if old_summary.exists():
+        with old_summary.open("r", newline="", encoding="utf-8") as f:
+            old_rows = {row["mode"]: row for row in csv.DictReader(f)}
+
+        lines += [
+            "",
+            "## 5. Rapordaki Tablo 4 ile karsilastirma (koridorda gecen sure)",
+            "",
+            "| Mod | Tablo 4 (17 Mayis, tek tohum) | Bugun (tum tohumlar ort.) | Fark |",
+            "|---|---|---|---|",
+        ]
+
+        for mode in OLD_MODES:
+            if mode not in old_rows or mode not in stats:
+                continue
+            old = old_rows[mode]
+            old_travel = float(old["average_travel_time"])
+            item = stats[mode]
+            lines.append(
+                f"| {MODE_LABELS.get(mode, mode)} "
+                f"| {time_text(old_travel)}, {old['completed_vehicle_count']}/{old['test_vehicle_count']} arac "
+                f"| {time_text(item['travel'])}, {item['vehicles']}/{item['planned']} arac "
+                f"| {change_text(item['travel'], old_travel)} |"
+            )
+
+        lines += [
+            "",
+            "Fark nedeni: Tablo 4 17 Mayis dosyalariyla uretildi; sonrasinda ag, talep ve 10 modelin 7'si degisti. "
+            "Tablo 4 ayrica tek tohumdur.",
+        ]
+
+    READABLE_SUMMARY_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Okunabilir ozet yazildi: {READABLE_SUMMARY_FILE}")
 
 
 def write_multi_seed_summary(rows):
